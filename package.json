@@ -1,0 +1,44 @@
+{
+  "name": "earthquake",
+  "version": "1.0.0",
+  "description": "Earthquake API with Serverless and DynamoDB",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/ducmeit1/earthquake"
+  },
+  "keywords": [
+    "Earthquake"
+  ],
+  "author": "Duc Ho",
+  "license": "ISC",
+  "dependencies": {
+    "@middy/core": "^3.3.4",
+    "@types/aws-lambda": "^8.10.104",
+    "@types/dotenv": "^8.2.0",
+    "@types/lodash": "^4.14.185",
+    "@types/serverless": "^3.12.8",
+    "aws-sdk": "^2.1220.0",
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.2",
+    "lodash": "^4.17.21",
+    "prettier": "^2.7.1",
+    "serverless": "^3.22.0",
+    "serverless-dynamodb-local": "^0.2.40",
+    "serverless-offline": "^10.1.0",
+    "serverless-webpack": "^5.9.1",
+    "source-map-support": "^0.5.21",
+    "ts-loader": "^9.4.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.3",
+    "webpack": "^5.74.0",
+    "webpack-node-externals": "^3.0.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node16": "^1.0.3",
+    "@types/node": "^18.7.18"
+  }
+}

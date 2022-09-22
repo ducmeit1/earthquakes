@@ -1,0 +1,85 @@
+service: earthquakes
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: ap-southeast-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+        - ses:*
+      Resource: '*'    
+
+package:
+    individually: true
+
+plugins:
+  - serverless-webpack
+  - serverless-dynamodb-local
+  - serverless-offline
+
+custom:
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      heapInitial: 200m
+      heapMax: 1g
+      migrate: true
+      seed: true
+      covertEmptyValues: true
+
+resources:
+  Resources:
+    earthquakesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: earthquakesTable
+        AttributeDefinitions:
+          - AttributeName: code
+            AttributeType: S
+        KeySchema:
+          - AttributeName: code
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    requestHistoryTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: requestHistoryTable
+        AttributeDefinitions:
+          - AttributeName: requestId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: requestId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+functions:
+  fetchEarthquakes:
+    handler: function/FetchEarthquakes.handler
+    events:
+      - http:
+          path: /earthquakes/fetch
+          method: GET
+          cors: true
+  queryEarthquakes:
+    handler: function/GetEarthquakes.handler
+    events:
+      - http:
+          path: /earthquakes
+          method: GET
+          cors: true
+  queryRequestHistory:
+    handler: function/GetRequestHistory.handler
+    events:
+      - http:
+          path: /history
+          method: GET
+          cors: true
